@@ -10,7 +10,7 @@
 #SBATCH -o /data5/deepro/starrseq/main_library/6_sequence_determinants/slurm/logs/out_%a.log
 #SBATCH -e /data5/deepro/starrseq/main_library/6_sequence_determinants/slurm/logs/err_%a.log
 #SBATCH --nodelist laila
-#SBATCH --array 30-32
+#SBATCH --array 32-58
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

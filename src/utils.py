@@ -135,9 +135,9 @@ def fastafrombed(bed_filepath, genome_filepath, output_filepath):
     return
 
 def meme_preprocess(preprocess_outdir, peak_file, background_file, reference_genome):
-    peak_fasta_file, bg_fasta_file = os.path.join(preprocess_outdir, get_filebasename(peak_file), ".fa"), os.path.join(preprocess_outdir, get_filebasename(background_file), ".fa")
+    peak_fasta_file, bg_fasta_file = os.path.join(preprocess_outdir, f"{get_filebasename(peak_file)}.fa"), os.path.join(preprocess_outdir, f"{get_filebasename(background_file)}.fa")
     fastafrombed(peak_file, reference_genome, peak_fasta_file)
-    fastafrombed(background_file, reference_genome, peak_fasta_file)
+    fastafrombed(background_file, reference_genome, bg_fasta_file)
     return peak_fasta_file, bg_fasta_file
 
 ############
