@@ -65,7 +65,7 @@ def get_filebasename(filename):
 ####################
 
 def create_homer_compatible_bedfile(bed_filepath, processed_filepath):
-    df = pd.read_csv(bed_filepath, sep="\t", usecols=[0,1,2], header=None)
+    df = pd.read_csv(bed_filepath, sep="\t", usecols=[0,1,2], header=None).drop_duplicates(keep="first")
     df[3] = df[0] + ":" + df[1].astype(str) + "-" + df[2].astype(str)
     df[4] = 0
     df[5] = "."
@@ -109,7 +109,7 @@ def create_background(master_file, peak_file, background_file):
 
 
 #############
-# homer run #
+# homer mea #
 #############
 
 def run_mea_homer(peak_file, reference_genome, background_region, output_dir, threads):
@@ -141,7 +141,7 @@ def meme_preprocess(preprocess_outdir, peak_file, background_file, reference_gen
     return peak_fasta_file, bg_fasta_file
 
 ############
-# meme run #
+# meme mea #
 ############
 
 def run_mea_meme(peak_file, reference_genome, background_region, motif_file, preprocess_outdir, results_outdir):
@@ -181,3 +181,20 @@ def run_mea(
         # assuming alternate method is meme
         run_mea_meme(lib_peak_file, genome, background_region_filepath, motif_file, preprocess_outdir, results_outdir)
     return
+
+
+####################
+# homer motif scan #
+####################
+
+def pwm_scan_homer(homer_roi, homer_motifs, genome, homer_outdir, threads):
+    logfile = os.path.join(homer_outdir, "motif_scan.log")
+    outfile = os.path.join(homer_outdir, "motif_scan.tsv")
+    cmd = [
+        "findMotifsGenome.pl", homer_roi, genome, homer_outdir, 
+        "-find", homer_motifs, "-p", str(threads)
+        ]
+    with open(logfile, "w") as lf:
+        with open(outfile, "w") as of:
+            results = subprocess.run(cmd, stdout=of, stderr=lf)
+    return results
