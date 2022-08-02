@@ -3,14 +3,14 @@
 #SBATCH --partition=girirajan
 #SBATCH --job-name=starr_mea
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=64
 #SBATCH --time=400:0:0
 #SBATCH --mem-per-cpu=20G
 #SBATCH --chdir /data5/deepro/starrseq/main_library/6_sequence_determinants/src
 #SBATCH -o /data5/deepro/starrseq/main_library/6_sequence_determinants/slurm/logs/out_%a.log
 #SBATCH -e /data5/deepro/starrseq/main_library/6_sequence_determinants/slurm/logs/err_%a.log
 #SBATCH --nodelist laila
-#SBATCH --array 32-58
+#SBATCH --array 59-100
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

@@ -11,13 +11,14 @@ def main(
     method,
     motif_file,
     diff_activity_type,
+    diff_activity_analysis_type,
     threads,
     ):
 
     # determine analysis type
     analysis = "lib_peaks"
     if diff_activity_type:
-        analysis = "diff_peaks"
+        analysis = diff_activity_analysis_type
 
     # get peak filepath
     lib_peak_file = ut.get_lib_peak_filepath(peak_store_dir, lib_short) if not diff_activity_type else ut.get_lib_dapeak_filepath(peak_store_dir, lib_short, diff_activity_type)
@@ -55,6 +56,7 @@ if __name__ == "__main__":
     parser.add_argument("--method", type=str, default="homer", help="MEA method - homer/meme")
     parser.add_argument("--motif_file", type=str, default="", help="known motifs to be used with MEA method")
     parser.add_argument("--diff_activity_type", type=str, default="", help="type of differential enhancer activity, use this argument to compare induced,repressed and constitutive peaks between lib1 and control")
+    parser.add_argument("--diff_activity_analysis_type", type=str, default="diff_peaks", help="type of method used to measure differential enhancer activity, use this argument to compare differential peaks called using deseq2 or normal bedtools intersection")
     parser.add_argument("--threads", type=int, default=64, help="Number of cores to use")
 
     cli_args = parser.parse_args()
@@ -69,5 +71,6 @@ if __name__ == "__main__":
         cli_args.method,
         cli_args.motif_file,
         cli_args.diff_activity_type,
+        cli_args.diff_activity_analysis_type,
         cli_args.threads,
     )
